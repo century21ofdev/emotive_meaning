@@ -1,3 +1,6 @@
+import re
+
+
 # emoticons
 def load_dict_smileys():
     return {
@@ -189,3 +192,30 @@ def load_dict_contractions():
         "luv": "love",
         "sux": "sucks"
     }
+
+
+def clean_tweet(tweet):
+    """
+    Utility function to clean tweet text by removing links, special characters
+    using simple regex statements.
+    """
+    # CONTRACTIONS source: https://en.wikipedia.org/wiki/Contraction_%28grammar%29
+    contractions = load_dict_contractions()
+    # Deal with emoticons source: https://en.wikipedia.org/wiki/List_of_emoticons
+    smiley = load_dict_smileys()
+
+    tweet = tweet.replace("’", "'")
+    words = tweet.split()
+
+    reformed = [contractions[word] if word in contractions else word for word in words]
+
+    tweet = " ".join(reformed)
+    words = tweet.split()
+
+    reformed = [smiley[word] if word in smiley else word for word in words]
+
+    tweet = " ".join(reformed)
+
+    # Removal of address
+    tweet = ' '.join(re.sub("(\w+:\/\/\S+)", " ", tweet).split())
+    return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])| (\w+:\ /  \ /  \S+)", " ", tweet).split()).lower()
