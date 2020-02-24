@@ -1,4 +1,8 @@
 import re
+from nltk.corpus import stopwords
+from nltk.tokenize import RegexpTokenizer
+from nltk.stem import WordNetLemmatizer
+from nltk.stem.porter import PorterStemmer
 
 
 # emoticons
@@ -219,3 +223,30 @@ def clean_tweet(tweet):
     # Removal of address
     tweet = ' '.join(re.sub("(\w+:\/\/\S+)", " ", tweet).split())
     return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])| (\w+:\ /  \ /  \S+)", " ", tweet).split()).lower()
+
+
+# tokenization
+def tokenize(text):
+    tokenizer = RegexpTokenizer(r'\w+')
+    tokenized_text = [tokenizer.tokenize(i) for i in text.split()]
+    return tokenized_text
+
+
+# remove stopwords
+def remove_stopwords(text):
+    words = [w for w in text.split() if w not in stopwords.words('english')]
+    return words
+
+
+# Stemming & Lemmatizing:
+
+def word_lemmatizer(text):
+    lemmatizer = WordNetLemmatizer()
+    lemmatized_text = [lemmatizer.lemmatize(i) for i in text.split()]
+    return lemmatized_text
+
+
+def word_stemmer(text):
+    stemmer = PorterStemmer()
+    stem_txt = " ".join([stemmer.stem(i) for i in text.split()])
+    return stem_txt
