@@ -4,6 +4,8 @@ from nltk.probability import FreqDist
 from collections import namedtuple, Counter
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
+from sklearn.feature_extraction.text import CountVectorizer
+from pandas.core.arrays.numpy_ import PandasArray
 
 
 def _reviews(df):
@@ -64,3 +66,18 @@ def ner(df):
     ner = ne_chunk(pos_tagged_words, binary=False)
     ner_draw = ner.draw()
     return ner, ner_draw
+
+
+def count_vectorizer(df: PandasArray):
+    """Count Vectorizer"""
+    reviews = df
+    cv = CountVectorizer()
+    _cv = namedtuple("_cv", ["vocab", "feature_names", "bow"])
+
+    bow = cv.fit_transform(reviews)
+
+    _cv.vocab = cv.vocabulary_
+    _cv.feature_names = cv.get_feature_names()
+    _cv.bow = bow
+
+    return _cv
