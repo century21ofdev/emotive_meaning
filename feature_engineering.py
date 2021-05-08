@@ -1,5 +1,5 @@
 import numpy as np
-from nltk import pos_tag
+from nltk import pos_tag, ne_chunk
 from nltk.probability import FreqDist
 from collections import namedtuple, Counter
 import matplotlib.pyplot as plt
@@ -56,3 +56,11 @@ def pos_tagging(df):
     """PoS tagging"""
     words = _reviews(df)
     return pos_tag(words)
+
+
+def ner(df):
+    """Named entity recognition"""
+    pos_tagged_words = pos_tagging(df)
+    ner = ne_chunk(pos_tagged_words, binary=False)
+    ner_draw = ner.draw()
+    return ner, ner_draw
