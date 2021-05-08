@@ -1,4 +1,5 @@
 import numpy as np
+from nltk import pos_tag
 from nltk.probability import FreqDist
 from collections import namedtuple, Counter
 import matplotlib.pyplot as plt
@@ -49,3 +50,9 @@ def word_cloud(df):
     plt.imshow(wc)
     plt.axis("off")
     plt.show()
+
+
+def pos_tagging(df):
+    """PoS tagging"""
+    words = _reviews(df)
+    return pos_tag(words)
