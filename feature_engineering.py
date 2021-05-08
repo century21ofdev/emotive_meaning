@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from sklearn.feature_extraction.text import CountVectorizer
 from pandas.core.arrays.numpy_ import PandasArray
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 def _reviews(df):
@@ -81,3 +82,17 @@ def count_vectorizer(df: PandasArray):
     _cv.bow = bow
 
     return _cv
+
+
+def terms_frequency(df: PandasArray):
+    """TF-IDF"""
+    reviews = df
+    tf_vectorizer = TfidfVectorizer(norm=None)
+    _tf_idf = namedtuple("_cv", ["vocab", "feature_names", "output"])
+
+    # Generating output for TF_IDF
+    _tf_idf.output = tf_vectorizer.fit_transform(reviews)
+    _tf_idf.output = tf_vectorizer.vocabulary_
+    _tf_idf.output = tf_vectorizer.get_feature_names()
+
+    return _tf_idf
