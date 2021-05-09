@@ -73,13 +73,12 @@ def count_vectorizer(df: PandasArray):
     """Count Vectorizer"""
     reviews = df
     cv = CountVectorizer()
-    _cv = namedtuple("_cv", ["vocab", "feature_names", "bow"])
-
-    bow = cv.fit_transform(reviews)
+    _cv = namedtuple("_cv", ["vocab", "feature_names", "bow", "shape"])
 
     _cv.vocab = cv.vocabulary_
     _cv.feature_names = cv.get_feature_names()
-    _cv.bow = bow
+    _cv.bow = cv.fit_transform(reviews)
+    _cv.shape = cv.ngram_range
 
     return _cv
 
