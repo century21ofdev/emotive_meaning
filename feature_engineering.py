@@ -92,8 +92,8 @@ def terms_frequency(df: PandasArray):
 
     # Generating output for TF_IDF
     _tf_idf.output = tf_vectorizer.fit_transform(reviews)
-    _tf_idf.output = tf_vectorizer.vocabulary_
-    _tf_idf.output = tf_vectorizer.get_feature_names()
+    _tf_idf.vocab = tf_vectorizer.vocabulary_
+    _tf_idf.feature_names = tf_vectorizer.get_feature_names()
 
     return _tf_idf
 
