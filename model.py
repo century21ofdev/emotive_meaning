@@ -1,10 +1,29 @@
 from numpy import reshape
 from keras.utils.np_utils import to_categorical
-from tensorflow.keras.layers import LSTM, Dense
+from tensorflow.keras.layers import LSTM, Dense, Embedding, Dropout  # @TODO add Activation and TimeDistributed layers
 from tensorflow.keras import Sequential
 from tensorflow.keras.callbacks import ModelCheckpoint
-from tensorflow.keras.layers import Dropout  # @TODO add Activation and TimeDistributed layers
 from keras.utils import plot_model
+from tensorflow.python.keras.optimizer_v2.adam import Adam
+
+
+def build_model(x_train_pad, y_train, max_tokens):
+    model = Sequential()
+    model.add(Embedding(input_dim=10000,
+                        output_dim=50,
+                        input_length=max_tokens,
+                        name='embedding_layer'))
+    model.add(LSTM(units=16, return_sequences=True))
+    model.add(LSTM(units=8, return_sequences=True))
+    model.add(LSTM(units=4))
+    model.add(Dense(1, activation='sigmoid'))
+    optimizer = Adam(lr=1e-3)
+    model.compile(loss='binary_crossentropy',
+                  optimizer=optimizer,
+                  metrics=['accuracy'])
+    model.fit(x_train_pad, y_train, epochs=250, batch_size=256)
+    model.save("bot_model.h5")
+    return model
 
 
 class ModelArtifact:
