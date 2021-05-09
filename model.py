@@ -21,9 +21,9 @@ def build_model(x_train_pad, y_train, max_tokens):
     model.compile(loss='binary_crossentropy',
                   optimizer=optimizer,
                   metrics=['accuracy'])
-    model.fit(x_train_pad, y_train, epochs=250, batch_size=256)
+    history = model.fit(x_train_pad, y_train, epochs=250, batch_size=256)
     model.save("bot_model.h5")
-    return model
+    return model, history
 
 
 class ModelArtifact:
