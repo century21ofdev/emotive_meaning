@@ -96,3 +96,8 @@ def terms_frequency(df: PandasArray):
     _tf_idf.output = tf_vectorizer.get_feature_names()
 
     return _tf_idf
+
+
+def visualize_ages():
+    # @TODO Implement Visualization Of Ages
+    pass
