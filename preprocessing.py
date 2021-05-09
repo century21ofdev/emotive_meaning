@@ -12,9 +12,8 @@ stemmer = PorterStemmer()
 df = pd.read_csv('E-Commerce_Reviews.csv')
 raw_data_analysis = raw_data_empty_info(df)
 
-# load emoticons
+# load emoticons and  contractions
 emoticons = emoticons()
-# load contractions
 contractions = contractions()
 
 if raw_data_analysis.review:
