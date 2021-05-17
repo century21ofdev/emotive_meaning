@@ -7,6 +7,7 @@ from wordcloud import WordCloud
 from sklearn.feature_extraction.text import CountVectorizer
 from pandas.core.arrays.numpy_ import PandasArray
 from sklearn.feature_extraction.text import TfidfVectorizer
+from nltk.util import ngrams
 
 
 def _reviews(df):
@@ -100,3 +101,9 @@ def terms_frequency(df: PandasArray):
 def visualize_ages():
     # @TODO Implement Visualization Of Ages
     pass
+
+
+def n_gram(n, df: PandasArray):
+    """NGram: assigning the probability to the next word"""
+    reviews = df
+    return dict([(word, True) for word in ngrams(reviews, n)])
