@@ -66,8 +66,7 @@ def ner(df):
     """Named entity recognition"""
     pos_tagged_words = pos_tagging(df)
     ner = ne_chunk(pos_tagged_words, binary=False)
-    ner_draw = ner.draw()
-    return ner, ner_draw
+    return ner
 
 
 def count_vectorizer(df: PandasArray):
@@ -76,20 +75,22 @@ def count_vectorizer(df: PandasArray):
     reviews = [i for i in review_df]
 
     cv = CountVectorizer()
-    document = [''.join(str(item)) for item in reviews]
-    cv_tf = cv.fit_transform(document)
+    review = [''.join(str(item)) for item in reviews]
+    cv_tf = cv.fit_transform(review)
 
     return cv_tf, cv.get_feature_names(), cv.ngram_range
 
 
 def terms_frequency(df: PandasArray):
     """TF-IDF"""
-    reviews = df
+    reviews = df['Review']
     tf_vectorizer = TfidfVectorizer(norm=None)
     _tf_idf = namedtuple("_cv", ["vocab", "feature_names", "output"])
 
+    review = [''.join(str(item)) for item in reviews]
+
     # Generating output for TF_IDF
-    _tf_idf.output = tf_vectorizer.fit_transform(reviews)
+    _tf_idf.output = tf_vectorizer.fit_transform(review)
     _tf_idf.vocab = tf_vectorizer.vocabulary_
     _tf_idf.feature_names = tf_vectorizer.get_feature_names()
 
