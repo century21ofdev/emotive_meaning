@@ -72,16 +72,14 @@ def ner(df):
 
 def count_vectorizer(df: PandasArray):
     """Count Vectorizer"""
-    reviews = df
+    review_df = df['Review']
+    reviews = [i for i in review_df]
+
     cv = CountVectorizer()
-    _cv = namedtuple("_cv", ["vocab", "feature_names", "bow", "shape"])
+    document = [''.join(str(item)) for item in reviews]
+    cv_tf = cv.fit_transform(document)
 
-    _cv.vocab = cv.vocabulary_
-    _cv.feature_names = cv.get_feature_names()
-    _cv.bow = cv.fit_transform(reviews)
-    _cv.shape = cv.ngram_range
-
-    return _cv
+    return cv_tf, cv.get_feature_names(), cv.ngram_range
 
 
 def terms_frequency(df: PandasArray):
@@ -96,11 +94,6 @@ def terms_frequency(df: PandasArray):
     _tf_idf.feature_names = tf_vectorizer.get_feature_names()
 
     return _tf_idf
-
-
-def visualize_ages():
-    # @TODO Implement Visualization Of Ages
-    pass
 
 
 def n_gram(n, df: PandasArray):
