@@ -1,6 +1,20 @@
 import string
+import webbrowser
 from pandas import DataFrame
 from collections import namedtuple
+
+
+def render(html_content: str, file_name: str):
+    with open(file_name+".html", "w") as f:
+        f.write(html_content)
+    webbrowser.open(file_name+".html")
+
+
+def html_to_str(*args):
+    html = ''
+    for df in args:
+        html += df.to_html()
+    return html
 
 
 def remove_punctuation(text):
