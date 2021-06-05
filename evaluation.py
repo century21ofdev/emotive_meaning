@@ -30,7 +30,7 @@ def get_word_sim(w1, w2):
     sim_skipgram = skipgram_model.wv.similarity(w1=w1, w2=w2)
     sim_subword = fasttext_model.wv.similarity(w1=w1, w2=w2)
 
-    return {"a_word": w1, "b_word": w2, "score_cbow": sim_cbow, "score_skipgram": sim_skipgram,
+    return {"word 1": w1, "word 2": w2, "score_cbow": sim_cbow, "score_skipgram": sim_skipgram,
             "score_fasttext": sim_subword}
 
 
@@ -43,7 +43,7 @@ def get_prf(x_true, x_pred):
 w1 = ['fit', 'love']
 data = get_topn_similarities(w1, topn=10)
 
-# word pairs & computing the similarities
+# word pairs for computing the similarities
 word_pairs = [['summer', 'beautiful'], ['dress', 'good'], ['wear', 'well'], ["fit", "size"],
               ["perfect", "jean"], ["like", "dress"], ["really", "comfortable"], ["perfect", "colour"],
               ["perfect", "color"], ["flattering", "loved"]]
@@ -69,12 +69,12 @@ cbow_skip_sim = DataFrame(score_cbow_skipgram, columns=["cbow", "skipgram"])
 cos_sim_sim = DataFrame(cos_sim, columns=["cbow", "skipgram"])
 
 prf = list()
-prf.append(get_prf(cbow_skip_sim["a"].values, cbow_skip_sim["b"].values))
-prf.append(get_prf(cos_sim_sim["a"].values, cos_sim_sim["b"].values))
+prf.append(get_prf(cbow_skip_sim["cbow"].values, cbow_skip_sim["skipgram"].values))
+prf.append(get_prf(cos_sim_sim["cbow"].values, cos_sim_sim["skipgram"].values))
 
 prf = html_to_str(DataFrame(prf))
 
-# demonstration || easy to integrate to web service or share with users via GUI
-render(html_content=data, file_name="data")
-render(html_content=similarity, file_name="sim")
+# demonstration || easy to integrate to web services or share with users via GUI
+render(html_content=data, file_name="top_n_sim")
+render(html_content=similarity, file_name="sim_between_word_pairs")
 render(html_content=prf, file_name="prf")

@@ -1,3 +1,5 @@
+from gensim.models.doc2vec import TaggedDocument
+from gensim.utils import simple_preprocess
 from numpy import reshape
 from keras.utils.np_utils import to_categorical
 from tensorflow.keras.layers import LSTM, Dense, Embedding, Dropout  # @TODO add Activation and TimeDistributed layers
@@ -28,8 +30,9 @@ def build_model(x_train_pad, y_train, max_tokens):
 
 class ModelArtifact:
 
-    def __init__(self):
+    def __init__(self, reviews):
         self.model = Sequential()
+        self._reviews = reviews
 
     def build(self, x_data, y_data, n_patterns, seq_length):
         X = reshape(x_data, (n_patterns, seq_length, 1))
@@ -55,5 +58,5 @@ class ModelArtifact:
         return self.model.load_weights('model_weights_saved.hdf5')
 
     def __iter__(self):
-        # @TODO implement it
-        raise NotImplementedError
+        for i in range(len(self._reviews)):
+            yield TaggedDocument(words=simple_preprocess(self._reviews[i]), tags=[i])
