@@ -32,22 +32,22 @@ df['Review'] = df['Review'].apply(lambda x: [lemmatizer.lemmatize(i) for i in x]
 # df['Review'] = df['Review'].apply(lambda x: [lemmatizer.lemmatize(i) for i in x])
 # df['Review'] = df['Review'].apply(lambda x: " ".join([stemmer.stem(i) for i in x]))
 
-#
-# def pipeline_1():
-#     """Tokenized & Lemmatized"""
-#     df['Review'] = df['Review'].apply(lambda x: tokenizer.tokenize(x.lower()))
-#     df['Review'] = df['Review'].apply(lambda x: [lemmatizer.lemmatize(i) for i in x])
-#     return df
-#
-#
-# def pipeline_2():
-#     """Lemmatized"""
-#     df['Review'] = df['Review'].apply(lambda x: [lemmatizer.lemmatize(i) for i in x])
-#     return df
-#
 
-# def pipeline_3():
-#     """Tokenized & Stemmed"""
-#     df['Review'] = df['Review'].apply(lambda x: tokenizer.tokenize(x.lower()))
-#     df['Review'] = df['Review'].apply(lambda x: " ".join([stemmer.stem(i) for i in x]))
-#     return df
+def pipeline_1():
+    """Tokenized & Lemmatized"""
+    df['Review'] = df['Review'].apply(lambda x: tokenizer.tokenize(x.lower()))
+    df['Review'] = df['Review'].apply(lambda x: [lemmatizer.lemmatize(i) for i in x])
+    return df
+
+
+def pipeline_2():
+    """Lemmatized"""
+    df['Review'] = df['Review'].apply(lambda x: [lemmatizer.lemmatize(i) for i in x])
+    return df
+
+
+def pipeline_3():
+    """Tokenized & Stemmed"""
+    df['Review'] = df['Review'].apply(lambda x: tokenizer.tokenize(x.lower()))
+    df['Review'] = df['Review'].apply(lambda x: " ".join([stemmer.stem(i) for i in x]))
+    return df
